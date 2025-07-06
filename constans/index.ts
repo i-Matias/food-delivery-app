@@ -18,6 +18,8 @@ import star from "@/assets/icons/star.png";
 import trash from "@/assets/icons/trash.png";
 import user from "@/assets/icons/user.png";
 import arrowBack from "../assets/icons/arrow-back.png";
+import cartWhite from "../assets/icons/cart-white.png";
+import cart from "../assets/icons/cart.png";
 
 import avatar from "@/assets/images/avatar.png";
 import avocado from "@/assets/images/avocado.png";
@@ -183,6 +185,8 @@ export const images = {
   arrowBack,
   arrowDown,
   arrowRight,
+  cart,
+  cartWhite,
   bag,
   check,
   clock,

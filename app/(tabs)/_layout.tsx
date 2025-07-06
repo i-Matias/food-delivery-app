@@ -2,8 +2,11 @@ import { images } from "@/constans";
 import { Tabs } from "expo-router";
 import React from "react";
 import { Image } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TabLayout() {
+  const insets = useSafeAreaInsets();
+
   return (
     <Tabs
       screenOptions={{
@@ -12,15 +15,30 @@ export default function TabLayout() {
         headerShown: false,
         tabBarStyle: {
           backgroundColor: "white",
-          borderTopWidth: 1,
-          borderTopColor: "#E5E7EB",
-          height: 60,
+          borderTopWidth: 0,
+          borderRadius: 24,
+          marginHorizontal: 16,
+          marginBottom: insets.bottom + 16,
+          height: 70,
           paddingBottom: 8,
           paddingTop: 8,
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 4,
+          },
+          shadowOpacity: 0.1,
+          shadowRadius: 12,
+          elevation: 8,
         },
         tabBarLabelStyle: {
-          fontSize: 12,
-          fontFamily: "Quicksand-Medium",
+          fontSize: 14,
+          fontFamily: "Quicksand-SemiBold",
+          gap: 4,
         },
       }}
     >
@@ -62,7 +80,7 @@ export default function TabLayout() {
           title: "Cart",
           tabBarIcon: ({ color, focused }) => (
             <Image
-              source={images.search}
+              source={images.cart} // Fixed: was using search icon
               style={{
                 width: 24,
                 height: 24,

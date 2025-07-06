@@ -123,11 +123,9 @@ export default function SignForm({ action, bgImage }: SignFormProps) {
               href={action === "signUp" ? "/(auth)/signIn" : "/(auth)/signUp"}
               asChild
             >
-              <TouchableOpacity>
-                <Text className="body-regular text-primary font-quicksand-semibold">
-                  {action === "signUp" ? "Sign In" : "Sign Up"}
-                </Text>
-              </TouchableOpacity>
+              <Text className="body-regular text-primary font-quicksand-semibold">
+                {action === "signUp" ? "Sign In" : "Sign Up"}
+              </Text>
             </Link>
           </View>
         </View>
