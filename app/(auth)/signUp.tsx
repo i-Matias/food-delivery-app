@@ -6,6 +6,7 @@ import Success from "../../components/Success";
 
 export default function SignUp() {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  
   return (
     <View className="flex-1 bg-white">
       <StatusBar
@@ -13,12 +14,14 @@ export default function SignUp() {
         translucent
         backgroundColor="transparent"
       />
-      <View
-        className={`flex-1 relative ${isAuthenticated ? "opacity-50" : ""}`}
-      >
+      <View className="flex-1 relative">
         <SignForm action="signUp" bgImage={images.signInLogo} />
       </View>
-      {isAuthenticated && <Success isSignUp={true} />}
+      {isAuthenticated && (
+        <View className="absolute inset-0">
+          <Success isSignUp={true} />
+        </View>
+      )}
     </View>
   );
 }

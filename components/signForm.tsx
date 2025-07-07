@@ -71,7 +71,8 @@ export default function SignForm({ action, bgImage }: SignFormProps) {
                   setSignForm((prev) => ({ ...prev, fullName: text }))
                 }
                 className="input bg-white-100"
-                placeholder="Enter your full name"
+                placeholder="John Smith"
+                placeholderTextColor={"#A0A0A0"}
                 autoCapitalize="words"
               />
             </View>
@@ -84,8 +85,9 @@ export default function SignForm({ action, bgImage }: SignFormProps) {
                 setSignForm((prev) => ({ ...prev, email: text }))
               }
               className="input bg-white-100"
-              placeholder="Enter your email"
+              placeholder="myemail@domain.com"
               keyboardType="email-address"
+              placeholderTextColor={"#A0A0A0"}
               autoCapitalize="none"
             />
           </View>
@@ -98,7 +100,8 @@ export default function SignForm({ action, bgImage }: SignFormProps) {
                 setSignForm((prev) => ({ ...prev, password: text }))
               }
               className="input bg-white-100"
-              placeholder="Enter your password"
+              placeholder="********"
+              placeholderTextColor={"#A0A0A0"}
               secureTextEntry
             />
           </View>

@@ -1,7 +1,8 @@
 import { images } from "@/constans";
 import { useAuthStore } from "@/store/authStore";
+import { BlurView } from "expo-blur";
 import { router } from "expo-router";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Animated,
   Dimensions,
@@ -16,36 +17,42 @@ export const unstable_settings = {
   gestureEnabled: false,
 };
 
-const { height: screenHeight } = Dimensions.get("window");
-
 interface SuccessProps {
   isSignUp?: boolean;
 }
 
-function Success({ isSignUp = false }: SuccessProps) {
-  const slideAnim = useRef(new Animated.Value(screenHeight)).current;
+export default function Success({ isSignUp = false }: SuccessProps) {
+  const [screenHeight] = useState(() => Dimensions.get("window").height);
+  const slideAnim = useRef(new Animated.Value(screenHeight * 0.5)).current;
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const { user } = useAuthStore();
+  const animationStarted = useRef(false);
 
-  useEffect(() => {
-    // Start animations when component mounts
+  const startEnterAnimation = useCallback(() => {
+    if (animationStarted.current) return;
+    animationStarted.current = true;
+
     Animated.parallel([
       Animated.timing(fadeAnim, {
         toValue: 1,
-        duration: 300,
+        duration: 250,
         useNativeDriver: true,
       }),
       Animated.spring(slideAnim, {
         toValue: 0,
-        tension: 65,
-        friction: 11,
+        tension: 80,
+        friction: 8,
         useNativeDriver: true,
       }),
     ]).start();
   }, [fadeAnim, slideAnim]);
 
-  const handleGoToHomepage = () => {
-    // Animate out before navigating
+  useEffect(() => {
+    const timer = setTimeout(startEnterAnimation, 50);
+    return () => clearTimeout(timer);
+  }, [startEnterAnimation]);
+
+  const handleGoToHomepage = useCallback(() => {
     Animated.parallel([
       Animated.timing(fadeAnim, {
         toValue: 0,
@@ -53,64 +60,66 @@ function Success({ isSignUp = false }: SuccessProps) {
         useNativeDriver: true,
       }),
       Animated.timing(slideAnim, {
-        toValue: screenHeight,
+        toValue: screenHeight * 0.5,
         duration: 250,
         useNativeDriver: true,
       }),
     ]).start(() => {
       router.replace("/(tabs)/home");
     });
-  };
+  }, [fadeAnim, slideAnim, screenHeight]);
 
-  const successTitle = isSignUp
-    ? "Account Created Successfully!"
-    : "Login Successful";
-  const successMessage = isSignUp
-    ? `Welcome ${user?.user_metadata?.full_name || "aboard"}! Your account has been created and you're ready to start ordering.`
-    : "You're all set to continue where you left off.";
+  const successContent = useMemo(() => {
+    const title = isSignUp
+      ? "Account Created Successfully!"
+      : "Login Successful";
+    const message = isSignUp
+      ? `Welcome ${user?.user_metadata?.full_name || "aboard"}! Your account has been created and you're ready to start ordering.`
+      : "You're all set to continue where you left off.";
+
+    return { title, message };
+  }, [isSignUp, user?.user_metadata?.full_name]);
 
   return (
     <View className="flex-1">
-      {/* Background Overlay */}
-      <Animated.View
-        className="absolute inset-0 bg-black/50 "
-        style={{ opacity: fadeAnim }}
-      />
-
-      {/* Full Height Container */}
-      <View className="flex-1">
+      <BlurView intensity={20} tint="dark" className="absolute inset-0">
         <Animated.View
-          className="bg-white flex-1"
+          className="absolute inset-0 bg-black/30"
+          style={{ opacity: fadeAnim }}
+        />
+      </BlurView>
+
+      <View className="flex-1 justify-end">
+        <Animated.View
+          className="bg-white rounded-t-3xl"
           style={{
+            height: screenHeight * 0.5,
             transform: [{ translateY: slideAnim }],
           }}
         >
-          <View className="items-center pt-4 pb-8">
+          <View className="items-center pt-4 pb-6">
             <View className="w-12 h-1.5 bg-gray-200 rounded-full" />
           </View>
 
-          <View className="px-6 flex-1 justify-center pb-16">
-            {/* Success Icon with enhanced styling */}
-            <View className="mb-8 items-center">
+          <View className="px-6 flex-1 justify-center pb-8">
+            <View className="mb-6 items-center">
               <Image
                 source={images.success}
-                className="w-32 h-32 mb-2"
+                className="w-24 h-24 mb-2"
                 resizeMode="contain"
               />
             </View>
 
-            {/* Success Text with improved typography */}
-            <View className="mb-12">
-              <Text className="text-3xl font-quicksand-bold text-gray-900 mb-3 text-center">
-                {successTitle}
+            <View className="mb-8">
+              <Text className="text-2xl font-quicksand-bold text-gray-900 mb-2 text-center">
+                {successContent.title}
               </Text>
-              <Text className="text-lg font-quicksand-regular text-gray-600 text-center leading-7 px-4">
-                {successMessage}
+              <Text className="text-base font-quicksand-regular text-gray-600 text-center leading-6 px-2">
+                {successContent.message}
               </Text>
             </View>
 
-            {/* Enhanced Action Button */}
-            <View className="px-4 mb-12">
+            <View className="px-4">
               <TouchableOpacity
                 className="bg-orange-500 py-4 px-8 rounded-2xl w-full shadow-lg"
                 style={{
@@ -133,5 +142,3 @@ function Success({ isSignUp = false }: SuccessProps) {
     </View>
   );
 }
-
-export default Success;
