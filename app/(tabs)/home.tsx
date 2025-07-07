@@ -1,5 +1,5 @@
 import FoodCategoryCard from "@/components/FoodCategoryCard";
-import { Header } from "@/components/header";
+import { Header } from "@/components/Header";
 import { images } from "@/constans";
 import { ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";

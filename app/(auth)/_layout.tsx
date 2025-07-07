@@ -10,18 +10,8 @@ export default function AuthLayout() {
         animation: "slide_from_right",
       }}
     >
-      <Stack.Screen
-        name="signIn"
-        options={{
-          title: "Sign In",
-        }}
-      />
-      <Stack.Screen
-        name="signUp"
-        options={{
-          title: "Sign Up",
-        }}
-      />
+      <Stack.Screen name="signIn" />
+      <Stack.Screen name="signUp" />
     </Stack>
   );
 }

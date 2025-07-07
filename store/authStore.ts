@@ -10,6 +10,13 @@ export interface SignFormPayload {
   fullName?: string;
 }
 
+export interface UpdateProfilePayload {
+  full_name?: string;
+  phone?: string;
+  address1?: string;
+  address2?: string;
+}
+
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
@@ -18,6 +25,7 @@ interface AuthState {
   signUp: (data: SignFormPayload) => Promise<void>;
   signIn: (data: SignFormPayload) => Promise<void>;
   signOut: () => Promise<void>;
+  updateProfile: (data: UpdateProfilePayload) => Promise<void>;
   initialize: () => Promise<void>;
 }
 
@@ -47,7 +55,7 @@ export const useAuthStore = create<AuthState>()(
       },
 
       signUp: async (payload: SignFormPayload) => {
-        const { data, error } = await supabase.auth.signUp({
+        const { error } = await supabase.auth.signUp({
           email: payload.email,
           password: payload.password,
           options: {
@@ -60,11 +68,10 @@ export const useAuthStore = create<AuthState>()(
           console.error("Sign up error:", error);
           throw new Error(error.message);
         }
-        // Don't set state here - let onAuthStateChange handle it
       },
 
       signIn: async (payload: SignFormPayload) => {
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { error } = await supabase.auth.signInWithPassword({
           email: payload.email,
           password: payload.password,
         });
@@ -80,6 +87,34 @@ export const useAuthStore = create<AuthState>()(
         if (error) {
           console.error("Sign out error:", error);
           throw new Error(error.message);
+        }
+        set({
+          user: null,
+          isAuthenticated: false,
+        });
+      },
+
+      updateProfile: async (payload: UpdateProfilePayload) => {
+        const { error } = await supabase.auth.updateUser({
+          data: payload,
+        });
+
+        if (error) {
+          console.error("Update profile error:", error);
+          throw new Error(error.message);
+        }
+
+        const currentUser = get().user;
+        if (currentUser) {
+          set({
+            user: {
+              ...currentUser,
+              user_metadata: {
+                ...currentUser.user_metadata,
+                ...payload,
+              },
+            },
+          });
         }
       },
     }),

@@ -1,6 +1,6 @@
 import { images, ImageValue } from "@/constans";
 import { SignFormPayload, useAuthStore } from "@/store/authStore";
-import { Link, router } from "expo-router";
+import { Link } from "expo-router";
 import { useState } from "react";
 import {
   Image,
@@ -47,7 +47,6 @@ export default function SignForm({ action, bgImage }: SignFormProps) {
         password: signForm.password,
       });
     }
-    router.replace("/(tabs)/home");
   };
 
   return (
@@ -65,7 +64,7 @@ export default function SignForm({ action, bgImage }: SignFormProps) {
         <View className="bg-white rounded-t-3xl px-6 pt-16 mt-72">
           {action === "signUp" && (
             <View className="mb-6">
-              <Text className="label mb-2">Email address</Text>
+              <Text className="label mb-2">Full Name</Text>
               <TextInput
                 value={signForm.fullName}
                 onChangeText={(text) =>
@@ -73,7 +72,7 @@ export default function SignForm({ action, bgImage }: SignFormProps) {
                 }
                 className="input bg-white-100"
                 placeholder="Enter your full name"
-                autoCapitalize="none"
+                autoCapitalize="words"
               />
             </View>
           )}
