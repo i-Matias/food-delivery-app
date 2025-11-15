@@ -208,3 +208,222 @@ export const images = {
 };
 
 export type ImageValue = (typeof images)[keyof typeof images];
+
+export interface MenuItem {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: any;
+  category: string;
+  rating: number;
+  preparationTime: string;
+  sizes?: Array<{ name: string; price: number }>;
+}
+
+export interface Restaurant {
+  id: string;
+  name: string;
+  description: string;
+  image: any;
+  rating: number;
+  deliveryTime: string;
+  deliveryFee: number;
+  categories: string[];
+  menuItems: MenuItem[];
+}
+
+export const restaurants: Restaurant[] = [
+  {
+    id: "1",
+    name: "Burger Palace",
+    description: "Best burgers in town with premium ingredients",
+    image: burgerOne,
+    rating: 4.8,
+    deliveryTime: "20-30 min",
+    deliveryFee: 2.99,
+    categories: ["Burger", "Fast Food"],
+    menuItems: [
+      {
+        id: "1-1",
+        name: "Classic Beef Burger",
+        description:
+          "Juicy beef patty with lettuce, tomato, onion, and our special sauce",
+        price: 8.99,
+        image: burgerOne,
+        category: "Burger",
+        rating: 4.7,
+        preparationTime: "15-20 min",
+        sizes: [
+          { name: "Regular", price: 0 },
+          { name: "Large", price: 2.0 },
+        ],
+      },
+      {
+        id: "1-2",
+        name: "Double Cheese Burger",
+        description: "Two beef patties loaded with cheese and pickles",
+        price: 11.99,
+        image: burgerTwo,
+        category: "Burger",
+        rating: 4.9,
+        preparationTime: "15-20 min",
+        sizes: [
+          { name: "Regular", price: 0 },
+          { name: "Large", price: 2.5 },
+        ],
+      },
+      {
+        id: "1-3",
+        name: "Veggie Burger",
+        description: "Plant-based patty with fresh vegetables and hummus",
+        price: 9.99,
+        image: burgerOne,
+        category: "Burger",
+        rating: 4.5,
+        preparationTime: "15-20 min",
+      },
+    ],
+  },
+  {
+    id: "2",
+    name: "Pizza Paradise",
+    description: "Authentic Italian pizza with fresh ingredients",
+    image: pizzaOne,
+    rating: 4.6,
+    deliveryTime: "30-40 min",
+    deliveryFee: 3.99,
+    categories: ["Pizza", "Italian"],
+    menuItems: [
+      {
+        id: "2-1",
+        name: "Margherita Pizza",
+        description: "Classic pizza with tomato sauce, mozzarella, and basil",
+        price: 12.99,
+        image: pizzaOne,
+        category: "Pizza",
+        rating: 4.7,
+        preparationTime: "25-30 min",
+        sizes: [
+          { name: "Small", price: 0 },
+          { name: "Medium", price: 3.0 },
+          { name: "Large", price: 6.0 },
+        ],
+      },
+      {
+        id: "2-2",
+        name: "Pepperoni Pizza",
+        description: "Loaded with pepperoni and extra cheese",
+        price: 14.99,
+        image: pizzaOne,
+        category: "Pizza",
+        rating: 4.8,
+        preparationTime: "25-30 min",
+        sizes: [
+          { name: "Small", price: 0 },
+          { name: "Medium", price: 3.0 },
+          { name: "Large", price: 6.0 },
+        ],
+      },
+      {
+        id: "2-3",
+        name: "Veggie Supreme",
+        description: "Fresh vegetables with olives and mushrooms",
+        price: 13.99,
+        image: pizzaOne,
+        category: "Pizza",
+        rating: 4.6,
+        preparationTime: "25-30 min",
+        sizes: [
+          { name: "Small", price: 0 },
+          { name: "Medium", price: 3.0 },
+          { name: "Large", price: 6.0 },
+        ],
+      },
+    ],
+  },
+  {
+    id: "3",
+    name: "Burrito Bar",
+    description: "Fresh Mexican-style burritos made to order",
+    image: buritto,
+    rating: 4.7,
+    deliveryTime: "25-35 min",
+    deliveryFee: 2.49,
+    categories: ["Burrito", "Mexican"],
+    menuItems: [
+      {
+        id: "3-1",
+        name: "Chicken Burrito",
+        description: "Grilled chicken with rice, beans, and fresh salsa",
+        price: 10.99,
+        image: buritto,
+        category: "Burrito",
+        rating: 4.8,
+        preparationTime: "20-25 min",
+      },
+      {
+        id: "3-2",
+        name: "Beef Burrito",
+        description: "Seasoned beef with guacamole and sour cream",
+        price: 11.99,
+        image: buritto,
+        category: "Burrito",
+        rating: 4.7,
+        preparationTime: "20-25 min",
+      },
+      {
+        id: "3-3",
+        name: "Veggie Burrito",
+        description: "Black beans, rice, grilled vegetables, and cheese",
+        price: 9.99,
+        image: buritto,
+        category: "Burrito",
+        rating: 4.6,
+        preparationTime: "20-25 min",
+      },
+    ],
+  },
+  {
+    id: "4",
+    name: "Wrap World",
+    description: "Healthy wraps with premium ingredients",
+    image: burgerTwo,
+    rating: 4.5,
+    deliveryTime: "15-25 min",
+    deliveryFee: 1.99,
+    categories: ["Wrap", "Healthy"],
+    menuItems: [
+      {
+        id: "4-1",
+        name: "Grilled Chicken Wrap",
+        description: "Tender chicken with crispy lettuce and ranch dressing",
+        price: 8.99,
+        image: burgerTwo,
+        category: "Wrap",
+        rating: 4.6,
+        preparationTime: "15-20 min",
+      },
+      {
+        id: "4-2",
+        name: "Caesar Wrap",
+        description: "Classic Caesar salad wrapped in a soft tortilla",
+        price: 7.99,
+        image: burgerTwo,
+        category: "Wrap",
+        rating: 4.5,
+        preparationTime: "15-20 min",
+      },
+      {
+        id: "4-3",
+        name: "Falafel Wrap",
+        description: "Crispy falafel with hummus and fresh vegetables",
+        price: 8.49,
+        image: burgerTwo,
+        category: "Wrap",
+        rating: 4.7,
+        preparationTime: "15-20 min",
+      },
+    ],
+  },
+];
